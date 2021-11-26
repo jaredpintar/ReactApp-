@@ -1,0 +1,19 @@
+Create a React Application on AWS S3 with Static Hosting + CloudFront
+
+1)      Create directory for this app
+2)      Create React App via terminal (npx create-react-app <name of app>
+3)      Cd demo-app (move into the directory)
+4)      Run the build (npm run build)
+5)      Create 2 S3 buckets (1 with www. And  1 without) – Enable static hosting on both
+6)      Go to WWW. Bucket and upload the build files from the reach app folder. Upload folder as well.
+7)      Go to S3, WWW. Bucket, permissions, and allow public access
+8)      Insert bucket policy (bucket policy can be found in description)
+9)      Go to S3 bucket with (www…) and add index.html.
+10)   Go to route 53, pick your domain, hosted zones, CREATE record, simple routing, define simple record, set up record name <your domain>, record type – A – Routes traffic to an IPv4 address and some AWS resources, VALUE/ROUTE TRAFFIC to Alias to S3 website endpoint, select region/availability zone.
+11)   Still in route 53, go to DEFINE SIMPLE RECORD (2nd one), you are going to be adding the non www… one, apply same settings as step 8.
+12)   Go to Certificate Manager, provision certificate, add domain name (and other domain), DNS validation, Create record in Route 53 to validate
+13)   Go to CloudFront, Create distribution, For origin domain name (go to S3 bucket, click domain, properties, under static website hosting, copy the endpoint link), change viewer protocol policy to ‘Redirect HTTP to HTTPS’, add alternate domain name AKA CNAME with www. domain, add SSL certificate.
+14)   Add 2nd CloudFront Distribution for the other S3 bucket, and copy / paste steps as above.
+15)   Go to S3 buckets, properties, static website hosting, make sure Protocol is set to HTTPS.
+16)   Go to Route 53, hosted zones, change the A record, edit Route Traffic to ‘Alias to CloudFront Distribution’ for both record names.
+17)   Test app – BooM Done 
